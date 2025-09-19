@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, FileText, GraduationCap, Phone, MapPin, Link as LinkIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,8 +25,8 @@ const Section = ({ id, title, children }: { id: string; title: string; children:
   </section>
 );
 
-// === DATA (edit me!) ===
-const DATA = {
+// === DEFAULT CONTENT (overridden by /content.json if present) ===
+const DEFAULT_CONTENT = {
   name: "Kevin Biergans",
   tagline: "Master’s student at the University of Notre Dame",
   location: "South Bend, IN",
@@ -38,6 +38,18 @@ const DATA = {
   about:
     "I’m a master’s student at Notre Dame with a builder’s mindset—combining science, data, and business to solve real problems. I enjoy product strategy, user research, and turning messy ideas into simple, useful tools.",
   interests: ["Healthcare + ops", "EdTech", "Analytics", "Product management", "Startups"],
+  sectionTitles: {
+    about: "About",
+    education: "Education",
+    experience: "Experience",
+    projects: "Projects",
+    skills: "Skills",
+    contact: "Contact",
+  },
+  aboutParagraphs: [
+    "I like building useful things with a clear ‘why’. My recent work spans user interviews, service design, and lightweight analytics to make better decisions faster.",
+    "I’m currently exploring roles in product, operations, or analytics for mission‑driven teams.",
+  ],
   education: [
     {
       school: "University of Notre Dame",
@@ -100,10 +112,33 @@ const DATA = {
     { group: "Build & Data", items: ["Python", "SQL", "Excel/Sheets", "Figma", "No‑code tooling"] },
     { group: "Business", items: ["Market sizing", "Competitive analysis", "Pricing", "Decks", "Ops"] },
   ],
+  highlights: [
+    "Hands‑on with interviews & usability tests",
+    "Comfortable in Figma, Python, SQL, Sheets",
+    "Enjoys clear writing & tight scopes",
+  ],
+  contactNote:
+    "Prefer a quick intro call? Send a couple times that work for you, and I’ll share a calendar link.",
+  footerNote: "Built with React + Tailwind.",
 };
 
 // === COMPONENT ===
 export default function KevinWebsite() {
+  const [DATA, setDATA] = useState(DEFAULT_CONTENT);
+
+  useEffect(() => {
+    // Attempt to load external content.json for easy customization
+    fetch("/content.json")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && typeof json === "object") {
+          setDATA((prev) => ({ ...prev, ...json }));
+        }
+      })
+      .catch(() => {
+        // ignore if not found
+      });
+  }, []);
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100">
       {/* Nav */}
@@ -111,12 +146,12 @@ export default function KevinWebsite() {
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <a href="#home" className="font-semibold">{DATA.name}</a>
           <div className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#about" className="hover:opacity-80">About</a>
-            <a href="#education" className="hover:opacity-80">Education</a>
-            <a href="#experience" className="hover:opacity-80">Experience</a>
-            <a href="#projects" className="hover:opacity-80">Projects</a>
-            <a href="#skills" className="hover:opacity-80">Skills</a>
-            <a href="#contact" className="hover:opacity-80">Contact</a>
+          <a href="#about" className="hover:opacity-80">{DATA.sectionTitles?.about ?? "About"}</a>
+          <a href="#education" className="hover:opacity-80">{DATA.sectionTitles?.education ?? "Education"}</a>
+          <a href="#experience" className="hover:opacity-80">{DATA.sectionTitles?.experience ?? "Experience"}</a>
+          <a href="#projects" className="hover:opacity-80">{DATA.sectionTitles?.projects ?? "Projects"}</a>
+          <a href="#skills" className="hover:opacity-80">{DATA.sectionTitles?.skills ?? "Skills"}</a>
+          <a href="#contact" className="hover:opacity-80">{DATA.sectionTitles?.contact ?? "Contact"}</a>
           </div>
           <div className="flex items-center gap-2">
             <a href={DATA.resume} target="_blank" rel="noreferrer">
@@ -160,8 +195,8 @@ export default function KevinWebsite() {
                   <div className="flex items-start gap-3">
                     <GraduationCap className="mt-1" size={18}/>
                     <div>
-                      <div className="font-semibold">University of Notre Dame</div>
-                      <div className="text-sm text-neutral-600 dark:text-neutral-400">M.S. ESTEEM • 2025–2026</div>
+                      <div className="font-semibold">{DATA.education?.[0]?.school}</div>
+                      <div className="text-sm text-neutral-600 dark:text-neutral-400">{DATA.education?.[0]?.program} • {DATA.education?.[0]?.dates}</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -197,26 +232,22 @@ export default function KevinWebsite() {
 
       {/* About */}
       <div className="max-w-5xl mx-auto px-4">
-        <Section id="about" title="About">
+        <Section id="about" title={DATA.sectionTitles?.about ?? "About"}>
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="md:col-span-2 rounded-2xl">
               <CardContent className="p-6 space-y-3">
-                <p>
-                  I like building useful things with a clear ‘why’. My recent work spans user interviews, service design, and
-                  lightweight analytics to make better decisions faster.
-                </p>
-                <p>
-                  I’m currently exploring roles in product, operations, or analytics for mission‑driven teams.
-                </p>
+                {DATA.aboutParagraphs?.map((p: string, idx: number) => (
+                  <p key={idx}>{p}</p>
+                ))}
               </CardContent>
             </Card>
             <Card className="rounded-2xl">
               <CardContent className="p-6">
                 <div className="font-semibold mb-2">Highlights</div>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Hands‑on with interviews & usability tests</li>
-                  <li>Comfortable in Figma, Python, SQL, Sheets</li>
-                  <li>Enjoys clear writing & tight scopes</li>
+                  {DATA.highlights?.map((h: string, i: number) => (
+                    <li key={i}>{h}</li>
+                  ))}
                 </ul>
               </CardContent>
             </Card>
@@ -224,7 +255,7 @@ export default function KevinWebsite() {
         </Section>
 
         {/* Education */}
-        <Section id="education" title="Education">
+        <Section id="education" title={DATA.sectionTitles?.education ?? "Education"}>
           <div className="grid md:grid-cols-2 gap-6">
             {DATA.education.map((ed) => (
               <Card key={ed.school} className="rounded-2xl">
@@ -248,7 +279,7 @@ export default function KevinWebsite() {
         </Section>
 
         {/* Experience */}
-        <Section id="experience" title="Experience">
+        <Section id="experience" title={DATA.sectionTitles?.experience ?? "Experience"}>
           <div className="space-y-6">
             {DATA.experience.map((ex) => (
               <Card key={ex.role + ex.company} className="rounded-2xl">
@@ -272,7 +303,7 @@ export default function KevinWebsite() {
         </Section>
 
         {/* Projects */}
-        <Section id="projects" title="Projects">
+        <Section id="projects" title={DATA.sectionTitles?.projects ?? "Projects"}>
           <div className="grid md:grid-cols-3 gap-6">
             {DATA.projects.map((p) => (
               <Card key={p.title} className="rounded-2xl hover:shadow-md transition-shadow">
@@ -296,7 +327,7 @@ export default function KevinWebsite() {
         </Section>
 
         {/* Skills */}
-        <Section id="skills" title="Skills">
+        <Section id="skills" title={DATA.sectionTitles?.skills ?? "Skills"}>
           <div className="grid md:grid-cols-3 gap-6">
             {DATA.skills.map((s) => (
               <Card key={s.group} className="rounded-2xl">
@@ -314,7 +345,7 @@ export default function KevinWebsite() {
         </Section>
 
         {/* Contact */}
-        <Section id="contact" title="Contact">
+        <Section id="contact" title={DATA.sectionTitles?.contact ?? "Contact"}>
           <Card className="rounded-2xl">
             <CardContent className="p-6">
               <div className="grid md:grid-cols-2 gap-6">
@@ -325,7 +356,7 @@ export default function KevinWebsite() {
                   <div className="flex items-center gap-3"><Github size={18}/> <a className="underline" href={DATA.github} target="_blank" rel="noreferrer">GitHub</a></div>
                 </div>
                 <div className="text-sm text-neutral-600 dark:text-neutral-400">
-                  Prefer a quick intro call? Send a couple times that work for you, and I’ll share a calendar link.
+                  {DATA.contactNote}
                 </div>
               </div>
             </CardContent>
@@ -333,7 +364,7 @@ export default function KevinWebsite() {
         </Section>
 
         {/* Footer */}
-        <div className="py-10 text-center text-sm text-neutral-500">© {new Date().getFullYear()} {DATA.name}. Built with React + Tailwind.</div>
+        <div className="py-10 text-center text-sm text-neutral-500">© {new Date().getFullYear()} {DATA.name}. {DATA.footerNote}</div>
       </div>
     </div>
   );

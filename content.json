@@ -1,0 +1,100 @@
+{
+  "name": "Kevin Biergans",
+  "tagline": "Master’s student at the University of Notre Dame",
+  "location": "South Bend, IN",
+  "email": "kbiergan@nd.edu",
+  "phone": "(517) 614-5740",
+  "linkedin": "https://www.linkedin.com/in/kevin-biergans",
+  "github": "https://github.com/kevin-biergans",
+  "resume": "/Kevin_Biergans_Resume.pdf",
+  "about": "I’m a master’s student at Notre Dame with a builder’s mindset—combining science, data, and business to solve real problems. I enjoy product strategy, user research, and turning messy ideas into simple, useful tools.",
+  "interests": [
+    "Healthcare + ops",
+    "Medical Sales",
+    "Patient Advocacy",
+    "Health & Wellness",
+    "Startups"
+  ],
+  "sectionTitles": {
+    "about": "About",
+    "education": "Education",
+    "experience": "Experience",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "aboutParagraphs": [
+    "Graduate student at the University of Notre Dame with a strong foundation in physiology and business, holding a B.S. from Michigan State University. Entrepreneurial self-starter and founder of a patient advocacy business, demonstrating initiative, empathy, and a passion for helping others navigate healthcare systems. Highly personable and communicative, with a natural ability to connect with diverse individuals and build trust. Eager to leverage interpersonal strengths and academic background to pursue a dynamic role in healthcare sales, business development, or client engagement within the healthcare industry."
+  ],
+  "education": [
+    {
+      "school": "University of Notre Dame",
+      "program": "M.S. (ESTEEM) – Engineering, Science & Technology Entrepreneurship",
+      "dates": "2025 — 2026",
+      "bullets": [
+        "Focus: product discovery, market validation, and go‑to‑market",
+        "Projects in healthtech and AI‑enabled productivity"
+      ]
+    },
+    {
+      "school": "Michigan State University",
+      "program": "B.S., Physiology (pre‑professional)",
+      "dates": "2019 — 2023",
+      "bullets": [
+        "Research experience, leadership in student orgs"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Product/Operations Intern",
+      "company": "TheraCare.AI (project)",
+      "dates": "2025",
+      "bullets": [
+        "Interviewed stakeholders and mapped workflows for a family health‑info assistant",
+        "Prototyped features, ran usability tests, and defined success metrics"
+      ]
+    },
+    {
+      "role": "Associate, Customer Success (part‑time)",
+      "company": "Advocate LLC",
+      "dates": "2024 — 2025",
+      "bullets": [
+        "Streamlined intake to reduce time‑to‑case‑start by 30%",
+        "Built tracking dashboards; standardized client updates"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Health Intake Flow Redesign",
+      "blurb": "Reduced form friction with progressive disclosure; +22% completion in pilot",
+      "link": "#",
+      "tags": ["UX", "Workflow", "Figma"]
+    },
+    {
+      "title": "Admissions Outreach Sequencer",
+      "blurb": "Created a lightweight sequence for recruiting conversations; improved reply rate",
+      "link": "#",
+      "tags": ["Growth", "Messaging", "Automation"]
+    },
+    {
+      "title": "Data Notebook: Service Ops",
+      "blurb": "Exploratory analysis of job cycle times and bottlenecks",
+      "link": "#",
+      "tags": ["Python", "Pandas", "Plotting"]
+    }
+  ],
+  "skills": [
+    { "group": "Product & Research", "items": ["User interviews", "Journey mapping", "JTBD", "A/B basics", "Usability testing"] },
+    { "group": "Build & Data", "items": ["Python", "SQL", "Excel/Sheets", "Figma", "No‑code tooling"] },
+    { "group": "Business", "items": ["Market sizing", "Competitive analysis", "Pricing", "Decks", "Ops"] }
+  ],
+  "highlights": [
+    "Hands‑on with interviews & usability tests",
+    "Comfortable in Figma, Python, SQL, Sheets",
+    "Enjoys clear writing & tight scopes"
+  ],
+  "contactNote": "Prefer a quick intro call? Send a couple times that work for you, and I’ll share a calendar link.",
+  "footerNote": "Built with React + Tailwind."
+}
