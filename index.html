@@ -1,340 +1,291 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, FileText, GraduationCap, Phone, MapPin, Link as LinkIcon } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[[Your Name]] — Portfolio</title>
+  <meta name="description" content="Portfolio of [[Your Name]] — [[One‑line role/mission]]." />
+  <meta property="og:title" content="[[Your Name]] — Portfolio" />
+  <meta property="og:description" content="Portfolio of [[Your Name]] — [[One‑line role/mission]]." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://[[your-github-username]].github.io/[[repo-name]]/" />
+  <meta property="og:image" content="[[absolute-url-to-profile-image-or-logo]]" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card: #111217;
+      --text: #f3f4f6;
+      --muted: #a7b0c0;
+      --brand: #6ee7b7;
+      --accent: #8ab4f8;
+      --border: #1f2430;
+      --link: #93c5fd;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --brand: #059669;
+        --accent: #2563eb;
+        --border: #e5e7eb;
+        --link: #1d4ed8;
+        --shadow: 0 10px 25px rgba(2,6,23,.08);
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    header { position: sticky; top: 0; backdrop-filter: saturate(180%) blur(8px); background: color-mix(in srgb, var(--bg) 85%, transparent); border-bottom: 1px solid var(--border); z-index: 30; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display:flex; align-items:center; gap:10px; font-weight: 700; letter-spacing: .3px; }
+    .brand-logo { width: 28px; height: 28px; display:grid; place-items:center; border-radius: 8px; background: linear-gradient(135deg, var(--brand), var(--accent)); box-shadow: var(--shadow); color:#0b1120; font-weight:900; }
+    .nav ul { list-style: none; display: flex; gap: 18px; padding: 0; margin: 0; }
+    .nav a { font-weight: 600; padding: 6px 10px; border-radius: 8px; }
+    .nav a:hover { background: var(--border); text-decoration: none; }
+    .hero { display:grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 64px 0 32px; }
+    .badge { display:inline-flex; align-items:center; gap:8px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: 14px; }
+    .h1 { font-size: clamp(34px, 6vw, 56px); line-height:1.1; margin: 12px 0; letter-spacing: -0.02em; }
+    .lead { font-size: clamp(16px, 1.9vw, 19px); color: var(--muted); }
+    .cta { display:flex; gap:12px; margin-top: 22px; flex-wrap: wrap; }
+    .btn { padding: 10px 14px; border-radius: 12px; font-weight: 700; border: 1px solid var(--border); background: var(--card); color: var(--text); box-shadow: var(--shadow); }
+    .btn.primary { background: linear-gradient(135deg, var(--brand), var(--accent)); color: #0b1120; border: none; }
+    .btn:hover { transform: translateY(-1px); }
+    .card-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); }
+    .card h3 { margin: 6px 0 8px; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    section { padding: 48px 0; }
+    .section-title { display:flex; align-items:center; justify-content:space-between; margin-bottom: 16px; }
+    .pill { font-size: 13px; color: var(--muted); border: 1px dashed var(--border); padding: 6px 10px; border-radius: 999px; }
+    .about { display:grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); box-shadow: var(--shadow); }
+    .timeline { border-left: 2px solid var(--border); padding-left: 16px; display: grid; gap: 14px; }
+    .event { position: relative; }
+    .event::before { content: ""; position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--accent)); }
+    .event h4 { margin: 0 0 4px; }
+    .skills { display:flex; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 8px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; font-size: 14px; color: var(--muted); }
+    .contact { display:grid; grid-template-columns: 1.2fr .8fr; gap: 24px; }
+    form { display:grid; gap: 12px; }
+    input, textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); }
+    label { font-weight: 600; font-size: 14px; color: var(--muted); }
+    footer { border-top: 1px solid var(--border); padding: 24px 0 48px; color: var(--muted); }
+    .note { font-size: 12px; color: var(--muted); }
+    .hide-on-mobile { display: block; }
+    .only-mobile { display: none; }
+    .menu-btn { display:none; background: var(--card); border: 1px solid var(--border); padding: 8px 10px; border-radius: 10px; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .about { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr 1fr; }
+      .hide-on-mobile { display: none; }
+      .only-mobile { display: inline-flex; }
+      .menu-btn { display:inline-flex; }
+    }
+    @media (max-width: 600px) { .card-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-logo">[[⚡]]</div>
+        <a href="#top" style="color:var(--text); text-decoration:none;">[[Your Name]]</a>
+      </div>
+      <button class="menu-btn only-mobile" aria-label="Toggle navigation" onclick="toggleMenu()">☰</button>
+      <ul id="menu" class="hide-on-mobile">
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="[[https://www.linkedin.com/in/your-handle]]" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+      </ul>
+    </div>
+  </header>
 
-// === Helper animation presets ===
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+  <main id="top" class="container">
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="intro-title">
+      <div>
+        <span class="badge">Available for opportunities</span>
+        <h1 id="intro-title" class="h1">Hi, I’m <span style="background: linear-gradient(135deg, var(--brand), var(--accent)); -webkit-background-clip:text; color:transparent;">[[Your Name]]</span>. I build <em>useful</em> things.</h1>
+        <p class="lead">[[One‑sentence pitch: e.g., "Graduate student and product‑minded builder focusing on healthcare, data, and delightful UX."]]</p>
+        <div class="cta">
+          <a class="btn primary" href="#contact">Contact me</a>
+          <a class="btn" href="[[/resume.pdf]]" target="_blank" rel="noopener">View résumé</a>
+          <a class="btn" href="[[https://github.com/your-username]]" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <p class="note" style="margin-top:8px;">Tip: Replace all [[double‑bracketed]] text with your info. You can delete this note.</p>
+      </div>
+      <div style="display:grid; place-items:center;">
+        <img class="avatar" src="[[/profile.jpg]]" alt="Portrait of [[Your Name]]" />
+      </div>
+    </section>
 
-const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => (
-  <section id={id} className="py-20 scroll-mt-24">
-    <motion.h2
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-100px" }}
-      className="text-3xl md:text-4xl font-bold mb-8"
-    >
-      {title}
-    </motion.h2>
-    {children}
-  </section>
-);
+    <!-- Projects -->
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="section-title">
+        <h2 id="projects-title">Selected Projects</h2>
+        <span class="pill">3 featured</span>
+      </div>
+      <div class="card-grid">
+        <article class="card">
+          <h3>[[Project One]]</h3>
+          <p>[[One‑liner about what it does and who it’s for.]]</p>
+          <p class="note">• <a href="[[live-demo-url]]" target="_blank" rel="noopener">Live demo</a> • <a href="[[repo-url]]" target="_blank" rel="noopener">Code</a></p>
+        </article>
+        <article class="card">
+          <h3>[[Project Two]]</h3>
+          <p>[[Impact/metrics if possible.]]</p>
+          <p class="note">• <a href="[[link]]" target="_blank" rel="noopener">Learn more</a></p>
+        </article>
+        <article class="card">
+          <h3>[[Project Three]]</h3>
+          <p>[[Tech stack / role / result.]]</p>
+          <p class="note">• <a href="[[link]]" target="_blank" rel="noopener">Learn more</a></p>
+        </article>
+      </div>
+    </section>
 
-// === DATA (edit me!) ===
-const DATA = {
-  name: "Kevin Biergans",
-  tagline: "Master’s student at the University of Notre Dame",
-  location: "South Bend, IN",
-  email: "kevin.biergans@example.com",
-  phone: "(555) 555-5555",
-  linkedin: "https://www.linkedin.com/in/kevin-biergans",
-  github: "https://github.com/kevin-biergans",
-  resume: "/Kevin_Biergans_Resume.pdf", // drop your file in /public
-  about:
-    "I’m a master’s student at Notre Dame with a builder’s mindset—combining science, data, and business to solve real problems. I enjoy product strategy, user research, and turning messy ideas into simple, useful tools.",
-  interests: ["Healthcare + ops", "EdTech", "Analytics", "Product management", "Startups"],
-  education: [
-    {
-      school: "University of Notre Dame",
-      program: "M.S. (ESTEEM) – Engineering, Science & Technology Entrepreneurship",
-      dates: "2025 — 2026",
-      bullets: [
-        "Focus: product discovery, market validation, and go‑to‑market",
-        "Projects in healthtech and AI‑enabled productivity",
-      ],
-    },
-    {
-      school: "Michigan State University",
-      program: "B.S., Physiology (pre‑professional)",
-      dates: "2019 — 2023",
-      bullets: ["Research experience, leadership in student orgs"],
-    },
-  ],
-  experience: [
-    {
-      role: "Product/Operations Intern",
-      company: "TheraCare.AI (project)",
-      dates: "2025",
-      bullets: [
-        "Interviewed stakeholders and mapped workflows for a family health‑info assistant",
-        "Prototyped features, ran usability tests, and defined success metrics",
-      ],
-    },
-    {
-      role: "Associate, Customer Success (part‑time)",
-      company: "Advocate LLC",
-      dates: "2024 — 2025",
-      bullets: [
-        "Streamlined intake to reduce time‑to‑case‑start by 30%",
-        "Built tracking dashboards; standardized client updates",
-      ],
-    },
-  ],
-  projects: [
-    {
-      title: "Health Intake Flow Redesign",
-      blurb: "Reduced form friction with progressive disclosure; +22% completion in pilot",
-      link: "#",
-      tags: ["UX", "Workflow", "Figma"],
-    },
-    {
-      title: "Admissions Outreach Sequencer",
-      blurb: "Created a lightweight sequence for recruiting conversations; improved reply rate",
-      link: "#",
-      tags: ["Growth", "Messaging", "Automation"],
-    },
-    {
-      title: "Data Notebook: Service Ops",
-      blurb: "Exploratory analysis of job cycle times and bottlenecks",
-      link: "#",
-      tags: ["Python", "Pandas", "Plotting"],
-    },
-  ],
-  skills: [
-    { group: "Product & Research", items: ["User interviews", "Journey mapping", "JTBD", "A/B basics", "Usability testing"] },
-    { group: "Build & Data", items: ["Python", "SQL", "Excel/Sheets", "Figma", "No‑code tooling"] },
-    { group: "Business", items: ["Market sizing", "Competitive analysis", "Pricing", "Decks", "Ops"] },
-  ],
-};
-
-// === COMPONENT ===
-export default function KevinWebsite() {
-  return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100">
-      {/* Nav */}
-      <nav className="sticky top-0 z-50 backdrop-blur border-b border-neutral-200/60 dark:border-neutral-800/60 bg-white/70 dark:bg-neutral-900/70">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <a href="#home" className="font-semibold">{DATA.name}</a>
-          <div className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#about" className="hover:opacity-80">About</a>
-            <a href="#education" className="hover:opacity-80">Education</a>
-            <a href="#experience" className="hover:opacity-80">Experience</a>
-            <a href="#projects" className="hover:opacity-80">Projects</a>
-            <a href="#skills" className="hover:opacity-80">Skills</a>
-            <a href="#contact" className="hover:opacity-80">Contact</a>
-          </div>
-          <div className="flex items-center gap-2">
-            <a href={DATA.resume} target="_blank" rel="noreferrer">
-              <Button size="sm" variant="default" className="rounded-2xl">Resume</Button>
-            </a>
+    <!-- About -->
+    <section id="about" aria-labelledby="about-title">
+      <div class="section-title"><h2 id="about-title">About</h2><span class="pill">Who I am</span></div>
+      <div class="about">
+        <div class="card">
+          <h3>Short bio</h3>
+          <p>
+            [[2–4 sentences about you: background, what you’re studying/working on, what you care about, and what you’re looking for. Keep it human.]]
+          </p>
+          <div class="skills" aria-label="Skills">
+            <span class="chip">HTML/CSS/JS</span>
+            <span class="chip">Data Analysis</span>
+            <span class="chip">Customer Discovery</span>
+            <span class="chip">Product Thinking</span>
+            <span class="chip">Public Speaking</span>
           </div>
         </div>
-      </nav>
-
-      {/* Hero */}
-      <section id="home" className="max-w-5xl mx-auto px-4 pt-16 pb-10">
-        <div className="grid md:grid-cols-[1.2fr_.8fr] gap-8 items-center">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-              {DATA.name}
-            </h1>
-            <p className="mt-3 text-lg md:text-xl text-neutral-600 dark:text-neutral-300">{DATA.tagline}</p>
-            <p className="mt-5 max-w-2xl text-neutral-700 dark:text-neutral-300">{DATA.about}</p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {DATA.interests.map((i) => (
-                <span key={i} className="px-3 py-1 rounded-full border text-sm border-neutral-300 dark:border-neutral-700">{i}</span>
-              ))}
-            </div>
-            <div className="mt-6 flex gap-3">
-              <a href={DATA.linkedin} target="_blank" rel="noreferrer">
-                <Button variant="outline" className="rounded-2xl flex items-center gap-2"><Linkedin size={16}/>LinkedIn</Button>
-              </a>
-              <a href={DATA.github} target="_blank" rel="noreferrer">
-                <Button variant="outline" className="rounded-2xl flex items-center gap-2"><Github size={16}/>GitHub</Button>
-              </a>
-              <a href="#contact">
-                <Button className="rounded-2xl flex items-center gap-2"><Mail size={16}/>Contact</Button>
-              </a>
-            </div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
-            <Card className="rounded-2xl shadow-md">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <GraduationCap className="mt-1" size={18}/>
-                    <div>
-                      <div className="font-semibold">University of Notre Dame</div>
-                      <div className="text-sm text-neutral-600 dark:text-neutral-400">M.S. ESTEEM • 2025–2026</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <MapPin className="mt-1" size={18}/>
-                    <div>
-                      <div className="font-semibold">{DATA.location}</div>
-                      <div className="text-sm text-neutral-600 dark:text-neutral-400">Open to internships & projects</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <FileText className="mt-1" size={18}/>
-                    <div>
-                      <div className="font-semibold">Resume</div>
-                      <a className="text-sm underline" href={DATA.resume} target="_blank" rel="noreferrer">View PDF</a>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <LinkIcon className="mt-1" size={18}/>
-                    <div>
-                      <div className="font-semibold">Links</div>
-                      <div className="text-sm text-neutral-600 dark:text-neutral-400 flex gap-3">
-                        <a className="underline" href={DATA.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-                        <a className="underline" href={DATA.github} target="_blank" rel="noreferrer">GitHub</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+        <div class="card">
+          <h3>Quick facts</h3>
+          <ul>
+            <li>📍 Based in [[City, State]]</li>
+            <li>🎓 [[School / Program]]</li>
+            <li>💬 Open to: [[roles/opportunities]]</li>
+            <li>✉️ <a href="mailto:[[you@domain.com]]">[[you@domain.com]]</a></li>
+          </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* About */}
-      <div className="max-w-5xl mx-auto px-4">
-        <Section id="about" title="About">
-          <div className="grid md:grid-cols-3 gap-6">
-            <Card className="md:col-span-2 rounded-2xl">
-              <CardContent className="p-6 space-y-3">
-                <p>
-                  I like building useful things with a clear ‘why’. My recent work spans user interviews, service design, and
-                  lightweight analytics to make better decisions faster.
-                </p>
-                <p>
-                  I’m currently exploring roles in product, operations, or analytics for mission‑driven teams.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="rounded-2xl">
-              <CardContent className="p-6">
-                <div className="font-semibold mb-2">Highlights</div>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Hands‑on with interviews & usability tests</li>
-                  <li>Comfortable in Figma, Python, SQL, Sheets</li>
-                  <li>Enjoys clear writing & tight scopes</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </Section>
+    <!-- Experience -->
+    <section id="experience" aria-labelledby="exp-title">
+      <div class="section-title"><h2 id="exp-title">Experience</h2><span class="pill">Recent work</span></div>
+      <div class="timeline">
+        <div class="event">
+          <h4>[[Role — Company]]</h4>
+          <p class="note">[[Dates]] · [[City, State]]</p>
+          <ul>
+            <li>[[Impact statement — what changed because of your work?]]</li>
+            <li>[[Metric or outcome if possible.]]</li>
+          </ul>
+        </div>
+        <div class="event">
+          <h4>[[Role — Company]]</h4>
+          <p class="note">[[Dates]] · [[City, State]]</p>
+          <ul>
+            <li>[[What you built / shipped / improved.]]</li>
+            <li>[[Tooling / stack / partners.]]</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-        {/* Education */}
-        <Section id="education" title="Education">
-          <div className="grid md:grid-cols-2 gap-6">
-            {DATA.education.map((ed) => (
-              <Card key={ed.school} className="rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="font-semibold text-lg">{ed.school}</div>
-                      <div className="text-sm text-neutral-600 dark:text-neutral-400">{ed.program}</div>
-                    </div>
-                    <div className="text-sm opacity-80 whitespace-nowrap">{ed.dates}</div>
-                  </div>
-                  <ul className="list-disc pl-5 mt-3 space-y-1 text-sm">
-                    {ed.bullets.map((b, i) => (
-                      <li key={i}>{b}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Section>
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="section-title"><h2 id="contact-title">Get in touch</h2><span class="pill">Say hello</span></div>
+      <div class="contact">
+        <div class="card">
+          <p>If you’d like to chat about a project, role, or collaboration, drop a note below or email me directly.</p>
+          <form action="https://formspree.io/f/[[your-form-id]]" method="POST">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="What’s up?" required></textarea>
+            </div>
+            <button class="btn primary" type="submit">Send message</button>
+          </form>
+          <p class="note" style="margin-top:10px;">No backend needed — this uses Formspree. Replace the action URL with your own form ID or remove the form.</p>
+        </div>
+        <div class="card">
+          <h3>Elsewhere</h3>
+          <ul>
+            <li>GitHub: <a href="https://github.com/[[your-username]]" target="_blank" rel="noopener">[[your-username]]</a></li>
+            <li>LinkedIn: <a href="https://www.linkedin.com/in/[[your-handle]]" target="_blank" rel="noopener">[[your-handle]]</a></li>
+            <li>Instagram: <a href="https://instagram.com/[[your-handle]]" target="_blank" rel="noopener">[[your-handle]]</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
 
-        {/* Experience */}
-        <Section id="experience" title="Experience">
-          <div className="space-y-6">
-            {DATA.experience.map((ex) => (
-              <Card key={ex.role + ex.company} className="rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="font-semibold text-lg">{ex.role}</div>
-                      <div className="text-sm text-neutral-600 dark:text-neutral-400">{ex.company}</div>
-                    </div>
-                    <div className="text-sm opacity-80 whitespace-nowrap">{ex.dates}</div>
-                  </div>
-                  <ul className="list-disc pl-5 mt-3 space-y-1 text-sm">
-                    {ex.bullets.map((b: string, i: number) => (
-                      <li key={i}>{b}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Section>
-
-        {/* Projects */}
-        <Section id="projects" title="Projects">
-          <div className="grid md:grid-cols-3 gap-6">
-            {DATA.projects.map((p) => (
-              <Card key={p.title} className="rounded-2xl hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="font-semibold">{p.title}</div>
-                  <div className="text-sm text-neutral-600 dark:text-neutral-400 mt-1">{p.blurb}</div>
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    {p.tags.map((t: string) => (
-                      <span key={t} className="px-2 py-0.5 rounded-full border text-xs border-neutral-300 dark:border-neutral-700">{t}</span>
-                    ))}
-                  </div>
-                  {p.link && (
-                    <a href={p.link} className="inline-flex items-center gap-2 mt-4 text-sm underline" target="_blank" rel="noreferrer">
-                      View <LinkIcon size={14} />
-                    </a>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Section>
-
-        {/* Skills */}
-        <Section id="skills" title="Skills">
-          <div className="grid md:grid-cols-3 gap-6">
-            {DATA.skills.map((s) => (
-              <Card key={s.group} className="rounded-2xl">
-                <CardContent className="p-6">
-                  <div className="font-semibold mb-2">{s.group}</div>
-                  <div className="flex flex-wrap gap-2 text-sm">
-                    {s.items.map((it: string) => (
-                      <span key={it} className="px-2 py-0.5 rounded-full border border-neutral-300 dark:border-neutral-700">{it}</span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </Section>
-
-        {/* Contact */}
-        <Section id="contact" title="Contact">
-          <Card className="rounded-2xl">
-            <CardContent className="p-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3"><Mail size={18}/> <a className="underline" href={`mailto:${DATA.email}`}>{DATA.email}</a></div>
-                  <div className="flex items-center gap-3"><Phone size={18}/> <span>{DATA.phone}</span></div>
-                  <div className="flex items-center gap-3"><Linkedin size={18}/> <a className="underline" href={DATA.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></div>
-                  <div className="flex items-center gap-3"><Github size={18}/> <a className="underline" href={DATA.github} target="_blank" rel="noreferrer">GitHub</a></div>
-                </div>
-                <div className="text-sm text-neutral-600 dark:text-neutral-400">
-                  Prefer a quick intro call? Send a couple times that work for you, and I’ll share a calendar link.
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </Section>
-
-        {/* Footer */}
-        <div className="py-10 text-center text-sm text-neutral-500">© {new Date().getFullYear()} {DATA.name}. Built with React + Tailwind.</div>
+  <footer>
+    <div class="container" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <p>© <span id="year"></span> [[Your Name]]. All rights reserved.</p>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="btn" onclick="toggleTheme()" aria-label="Toggle theme">Toggle theme</button>
+        <a class="btn" href="#top">Back to top ↑</a>
       </div>
     </div>
-  );
-}
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    function toggleMenu(){
+      const menu = document.getElementById('menu');
+      if(!menu) return;
+      const isHidden = menu.classList.contains('hide-on-mobile');
+      if(isHidden){
+        menu.classList.remove('hide-on-mobile');
+      } else {
+        menu.classList.add('hide-on-mobile');
+      }
+    }
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); }
+      })
+    })
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Theme toggle via data attribute
+    function toggleTheme(){
+      const prev = document.documentElement.getAttribute('data-theme');
+      document.documentElement.setAttribute('data-theme', prev === 'light' ? 'dark' : 'light');
+      // swap root vars if needed (simple approach relies on prefers-color-scheme)
+    }
+  </script>
+</body>
+</html>
